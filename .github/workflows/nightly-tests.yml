@@ -2,7 +2,7 @@ name: Nightly Tests
 
 on:
   schedule:
-    - cron: '53 14 * * *'
+    - cron: '03 17 * * *'
   workflow_dispatch:
     inputs:
       run_flows:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   tests:
-    if: ${{github.event.repository.full_name}} == 'hyperledger/aries-cloudagent-python' || (github.event.inputs.run_flows)
+    if: github.repository == 'hyperledger/aries-cloudagent-python' || (github.event.inputs.run_flows)
     name: Tests
     strategy:
       fail-fast: false
