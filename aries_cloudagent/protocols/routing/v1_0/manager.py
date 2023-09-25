@@ -12,6 +12,7 @@ from ....storage.error import (
 )
 
 from .models.route_record import RouteRecord
+from ...coordinate_mediation.v1_0.normalization import normalize_from_public_key
 
 
 LOGGER = logging.getLogger(__name__)
@@ -114,6 +115,10 @@ class RoutingManager:
 
         async with self._profile.session() as session:
             results = await RouteRecord.query(session, tag_filter=filters)
+
+        results = [
+            normalize_from_public_key(result.recipient_key) for result in results
+        ]
 
         return results
 
